@@ -1,0 +1,32 @@
+server:
+  port: ${PORT:8082}
+
+spring:
+  application:
+    name: redis-api
+  datasource:
+    url: jdbc:h2:mem:testProductApiDB;MODE=Oracle
+    driver-class-name: org.h2.Driver
+  jpa:
+    show-sql: false
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write_dates_as_timestamps: false
+    property-naming-strategy: SNAKE_CASE
+  h2:
+    console:
+      enabled: true
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+
+logging:
+  level:
+    me:
+      hl: DEBUG
+    org:
+      springframework:
+        cache: #Set 'TRACE' to enable cache log detail
