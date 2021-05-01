@@ -24,7 +24,6 @@ class CacheService(private val cacheManager: CacheManager) {
             }
     }
 
-    // Every 5 minutes
     @Scheduled(cron = "0 */5 * * * *")
     fun evictAllCachesAtIntervals() {
         evictAllCaches()

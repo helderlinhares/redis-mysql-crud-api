@@ -5,23 +5,26 @@ spring:
   application:
     name: redis-api
   datasource:
-    url: jdbc:h2:mem:testProductApiDB;MODE=Oracle
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/db
+    username: ITEM_USER
+    password: Jv1XBJ@rq6J$
   jpa:
     show-sql: false
+    hibernate:
+      ddl-auto: update
   jackson:
     default-property-inclusion: non_null
     serialization:
       write_dates_as_timestamps: false
     property-naming-strategy: SNAKE_CASE
-  h2:
-    console:
-      enabled: true
   cache:
     type: redis
+    redis:
+      time-to-live: 2m
   redis:
     host: localhost
     port: 6379
+    timeout: 1s
 
 logging:
   level:

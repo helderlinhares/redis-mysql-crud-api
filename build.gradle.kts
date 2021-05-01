@@ -41,13 +41,6 @@ dependencyManagement {
     }
 }
 
-configurations {
-    all {
-        exclude("org.springframework.boot", "spring-boot-starter-logging")
-        exclude("ch.qos.logback", "logback-classic")
-        exclude("org.apache.logging.log4j", "log4j-to-slf4j")
-    }
-}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {

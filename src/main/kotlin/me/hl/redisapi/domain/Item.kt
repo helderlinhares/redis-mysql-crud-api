@@ -6,15 +6,11 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.SequenceGenerator
-import javax.persistence.Table
 
 @Entity
-@Table(name = "ITEM")
-@SequenceGenerator(name = "SQ_ITEM", sequenceName = "SQ_ITEM_ID", allocationSize = 1)
 data class Item(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_ITEM")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_ITEM")
     var id: Long?,
     @Column(name = "TXT_NAME")

@@ -1,4 +1,7 @@
 spring:
-  redis:
-    host: localhost
-    port: 6380
+  cache:
+    type: none
+  data:
+    redis:
+      repositories:
+        enabled: false
