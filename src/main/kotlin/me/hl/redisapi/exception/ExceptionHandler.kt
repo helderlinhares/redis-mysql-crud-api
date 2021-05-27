@@ -73,6 +73,10 @@ class ExceptionHandler(val messageSource: MessageSource) {
         return buildResponseAndLog(HttpStatus.BAD_REQUEST, request, errorResponse)
     }
 
+    @ExceptionHandler(Exception::class)
+    fun handleUnknownException(exception: Exception, request: HttpServletRequest) =
+        buildResponseAndLog(HttpStatus.INTERNAL_SERVER_ERROR, request)
+
 
     private fun buildResponseAndLog(status: HttpStatus, request: HttpServletRequest, payload: ErrorResponse? = null): ResponseEntity<ErrorResponse> {
         logResponse(status, payload, request)
