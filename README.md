@@ -4,7 +4,8 @@
 
 This is a simple example of an API Project using Kotlin to create, edit, delete and find an item.
 
-This project also uses Redis as a Memcached solution to optimize performance.
+This project was implemented as a Memcached spike, so it has some redundancies on cache functionalities.
+It also may need some refinements and additional unit tests.
 
 ### Technical Info
 
