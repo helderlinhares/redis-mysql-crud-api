@@ -15,6 +15,8 @@ It also may need some refinements and additional unit tests.
     * Sleuth
     * Docker Compose
     * Gradle
+    * JPA
+    * Redis
 * Database:
     * MySQL
 
