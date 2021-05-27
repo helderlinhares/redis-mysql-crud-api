@@ -75,3 +75,12 @@ Commands:
 * Show Available Keys: `KEYS *`
 * Get a Key value: `get "${KEY_NAME}"` (KEY_NAME example: "findById::1")
 * Delete a Key: `del "${KEY_NAME}"`
+
+## Postman
+
+To use this api you can install Postman and import the collection available on `postman` folder.
+
+To import the collection on Postman:
+1. Select the Menu `File > Import`
+2. Click on `Upload Files` button (`File` tab)
+3. Select `./postman/redis-api.postman_collection.json` file to import. 
