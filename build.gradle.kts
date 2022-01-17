@@ -41,6 +41,24 @@ dependencyManagement {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        failOnVersionConflict()
+        this.eachDependency {
+            if (requested.group == "ch.qos.logback") {
+                useVersion("[1.2.10, 1.3)")
+                because(
+                    "Fixes critical logback vulnerability in 1.2.8+, last version now 1.2.10. " +
+                            "Limited to 1.3 because of a legacy alpha 1.3 version."
+                )
+            }
+            if (requested.group == "org.apache.logging.log4j") {
+                useVersion("[2.17.1,)")
+                because("Fixes critical log4j vulnerability in 2.17.1")
+            }
+        }
+    }
+}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
