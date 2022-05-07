@@ -15,7 +15,7 @@ services:
     environment:
       MYSQL_DATABASE: 'db'
       MYSQL_USER: ${MYSQL_USER:-ITEM_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-Jv1XBJ@rq6J$}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-PASSWORD}
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
     ports:
       - '3306:3306'
