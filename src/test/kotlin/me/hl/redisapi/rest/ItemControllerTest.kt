@@ -5,7 +5,12 @@ import me.hl.redisapi.Commons.Companion.ITEM_DEFAULT_ID
 import me.hl.redisapi.buildAlternativeItemRequest
 import me.hl.redisapi.buildItem
 import me.hl.redisapi.buildItemRequest
+import me.hl.redisapi.buildItemWithBlankNameRequest
+import me.hl.redisapi.buildItemWithNameTooLongRequest
+import me.hl.redisapi.buildItemWithoutNameRequest
 import me.hl.redisapi.buildModifiedItem
+import me.hl.redisapi.buildNameNotBlankResponse
+import me.hl.redisapi.buildNameTooLongResponse
 import me.hl.redisapi.buildNotFoundResponse
 import me.hl.redisapi.domain.CacheService
 import me.hl.redisapi.domain.Item
@@ -16,10 +21,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.BDDMockito
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.MessageSource
+import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
@@ -31,7 +38,11 @@ import org.springframework.test.web.servlet.put
 @RunWith(SpringRunner::class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@Import(HttpEncodingAutoConfiguration::class)
 class ItemControllerTest {
+
+    @Autowired
+    private lateinit var messageSource: MessageSource
 
     @MockBean
     private lateinit var itemService: ItemService
@@ -41,9 +52,6 @@ class ItemControllerTest {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
-
-    @Autowired
-    private lateinit var messageSource: MessageSource
 
     @Test
     fun `Should return Item When Item exists`() {
@@ -119,6 +127,57 @@ class ItemControllerTest {
             .andExpect {
                 content {
                     json(Gson().toJson(item).trimIndent())
+                }
+            }
+    }
+
+    @Test
+    fun `Should not create Item with null name`(){
+        val itemRequest = buildItemWithoutNameRequest()
+
+        mockMvc.post("/items"){
+            contentType = MediaType.APPLICATION_JSON
+            content = Gson().toJson(itemRequest).trimIndent()
+        }
+            .andDo { print() }
+            .andExpect { status { isBadRequest() } }
+            .andExpect {
+                content {
+                    json(Gson().toJson(buildNameNotBlankResponse(messageSource)).trimIndent())
+                }
+            }
+    }
+
+    @Test
+    fun `Should not create Item with blank name`(){
+        val itemRequest = buildItemWithBlankNameRequest()
+
+        mockMvc.post("/items"){
+            contentType = MediaType.APPLICATION_JSON
+            content = Gson().toJson(itemRequest).trimIndent()
+        }
+            .andDo { print() }
+            .andExpect { status { isBadRequest() } }
+            .andExpect {
+                content {
+                    json(Gson().toJson(buildNameNotBlankResponse(messageSource)).trimIndent())
+                }
+            }
+    }
+
+    @Test
+    fun `Should not create Item with name too long`(){
+        val itemRequest = buildItemWithNameTooLongRequest()
+
+        mockMvc.post("/items"){
+            contentType = MediaType.APPLICATION_JSON
+            content = Gson().toJson(itemRequest).trimIndent()
+        }
+            .andDo { print() }
+            .andExpect { status { isBadRequest() } }
+            .andExpect {
+                content {
+                    json(Gson().toJson(buildNameTooLongResponse(messageSource)).trimIndent())
                 }
             }
     }
